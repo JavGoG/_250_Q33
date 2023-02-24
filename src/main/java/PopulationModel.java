@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 //(Q3)(a)
 public class PopulationModel {
     /*
@@ -19,6 +21,7 @@ public class PopulationModel {
         numB = new int[NUM_WEEKS];
         numA[0] = INITIALA;
         numB[0] = INITIALB;
+        createData();
     }
 
     //(Q3) (d)
@@ -48,16 +51,16 @@ public class PopulationModel {
     //(Q3) (f)
     public void storeNewPopulations(int thisWeek)
     {
-        int nextA = newNumA(numA[thisWeek-1], numA[thisWeek-1]);
-        numA[thisWeek] = nextA;
-        int nextB = newNumB(numB[thisWeek-1], numB[thisWeek-1]);
-        numB[thisWeek] = nextB;
+        if (thisWeek < 9) {
+            numA[thisWeek + 1] = newNumA(numA[thisWeek], numB[thisWeek]);
+            numB[thisWeek + 1] = newNumB(numA[thisWeek], numB[thisWeek]);
+        }
     }
 
     //(Q3) (g)
     public void createData()
     {
-        for (int i = 1; i < NUM_WEEKS; i++) {
+        for (int i = 0; i < NUM_WEEKS; i++) {
             storeNewPopulations(i);
         }
     }
@@ -67,7 +70,7 @@ public class PopulationModel {
     {
         StringBuilder builder;
         StringBuilder builder2;
-        for (int n = 0 ; n < numA.length; n++) {
+        for (int n = 0; n < numA.length; n++) {
             builder = new StringBuilder(numA[n]);
             builder2 = new StringBuilder(numB[n]);
             for (int i = 0; i < numA[n]; i++) {
@@ -78,6 +81,7 @@ public class PopulationModel {
             }
             System.out.println("Week " + n + "A" + builder.toString() + numA[n]);
             System.out.println("Week " + n + "B" + builder2.toString() + numB[n]);
+            System.out.println("");
         }
     }
 
